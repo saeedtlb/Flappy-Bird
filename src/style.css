@@ -9,6 +9,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .game_container {
@@ -16,6 +17,7 @@ body {
     width: 500px;
     height: 730px;
     position: relative;
+    overflow: hidden;
 }
 
 .sky {
@@ -31,6 +33,7 @@ body {
     height: 25%;
     position: absolute;
     bottom: 0;
+    z-index: 1;
 }
 
 .bird {
