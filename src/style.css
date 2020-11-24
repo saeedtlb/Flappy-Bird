@@ -39,5 +39,18 @@ body {
     height: 45px;
     position: absolute;
     left: 220px;
-    top: 50%;
+    /* bottom: 50%; */
+    bottom: 240px;
+}
+
+.obstacle {
+    background-color: green;
+    width: 60px;
+    height: 300px;
+    position: absolute;
+    /* bottom: 0; */
+}
+
+.obstacle_top {
+    transform: rotate(180deg);
 }
