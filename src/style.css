@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .game_container {
     margin: 20px;
     width: 500px;
@@ -24,4 +31,13 @@
     height: 25%;
     position: absolute;
     bottom: 0;
+}
+
+.bird {
+    background-color: goldenrod;
+    width: 60px;
+    height: 45px;
+    position: absolute;
+    left: 220px;
+    top: 50%;
 }
