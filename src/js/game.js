@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ground = document.querySelector('.ground_moving');
 
     // logical varriables
+    const speed = 40;
     const gravity = 3;
     let isGameOver = false;
     let { left: birdLeft, bottom: birdBottom } = getElementPosition(bird);
@@ -16,14 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
         birdBottom -= gravity;
         bird.style.bottom = birdBottom + 'px';
     };
-    // const gameTimer = setInterval(startGame, 30);
+    const gameTimer = setInterval(startGame, speed);
 
-    document.addEventListener('keyup', e => e.code === 'Space' && jump());
-
-    const jump = () => {
-        if (birdBottom < 485) birdBottom += 50;
+    const jump = e => {
+        if (e.code === 'Space' && birdBottom < 485) birdBottom += 50;
         bird.style.bottom = birdBottom + 'px';
     };
+
+    document.addEventListener('keyup', jump);
 
     const generateObstacle = () => {
         let obstacleLeft = 500;
@@ -32,30 +33,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const obstacle = document.createElement('div');
         const obstacleTop = document.createElement('div');
 
-        if (!isGameOver) {
-            obstacle.classList.add('obstacle');
-            obstacleTop.classList.add('obstacle', 'obstacle_top');
-        }
+        if (isGameOver) return;
+
+        obstacle.classList.add('obstacle');
+        obstacleTop.classList.add('obstacle', 'obstacle_top');
 
         obstacle.style.left = obstacleLeft + 'px';
         obstacleTop.style.left = obstacleLeft + 'px';
 
         obstacle.style.bottom = obstacleBottom + 'px';
-        // obstacleTop.style.bottom = obstacleBottom + gap + 'px';
         obstacleTop.style.top = -obstacleBottom + 'px';
 
         game.appendChild(obstacle);
         game.appendChild(obstacleTop);
 
         const moveObstacles = () => {
+            if (isGameOver) return;
+
             obstacleLeft -= 2;
             obstacle.style.left = obstacleLeft + 'px';
             obstacleTop.style.left = obstacleLeft + 'px';
 
             if (obstacleLeft === -60) {
-                // here ##############################################
+                clearInterval(timer);
+                game.removeChild(obstacle);
+                game.removeChild(obstacleTop);
+            }
+            if (
+                birdBottom === 0 ||
+                (obstacleLeft > 170 &&
+                    obstacleLeft < 281 &&
+                    (birdBottom < obstacleBottom + 116 ||
+                        birdBottom > obstacleBottom + 203))
+            ) {
+                gameOver();
+                clearInterval(timer);
             }
         };
+        let timer = setInterval(() => moveObstacles(), speed);
+        if (!isGameOver) setTimeout(generateObstacle, 4000);
     };
     generateObstacle();
+
+    const gameOver = () => {
+        clearInterval(gameTimer);
+        isGameOver = true;
+        document.removeEventListener('keyup', jump);
+    };
 });
