@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // get DOM elements
     const bird = document.querySelector('.bird');
     const game = document.querySelector('.game_container');
+    const sky = document.querySelector('.sky');
     const ground = document.querySelector('.ground_moving');
     const scoreTag = document.querySelectorAll('.score span');
     const bestscore = document.querySelector('.best_score span');
-    const startbtn = document.querySelector('.menu .start_btn');
+    const startbtn = document.querySelector('.menu .start');
+    const multibtn = document.querySelector('.menu .online');
     const menu = document.querySelector('.menu_container');
 
     // Get user best score from local storage and show it in menu
@@ -32,10 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let gameTimer = null;
     let time = null;
+    let onlineTimer = null;
 
-    startbtn.addEventListener('click', () => {
-        console.log('restart');
-        // reset varriables
+    const start = () => {
         score = 0;
         birdBottom = 240;
         isGameOver = false;
@@ -54,6 +55,43 @@ document.addEventListener('DOMContentLoaded', () => {
         time = setInterval(generateObstacle, 4000);
 
         menu.classList.add('hide');
+    };
+
+    // signle player mode
+    startbtn.addEventListener('click', start);
+    // multiplayer mode
+    multibtn.addEventListener('click', () => {
+        const socket = io();
+        const user = 'user' + Math.random().toString().slice(2, 5);
+
+        start();
+
+        // send my bird position to server
+        onlineTimer = setInterval(() => {
+            socket.emit('position', {
+                user,
+                birdBottom,
+                score,
+            });
+
+            if (isGameOver) {
+                clearInterval(onlineTimer);
+                socket.disconnect();
+            }
+        }, 500);
+
+        // create another bird for other player
+        const otherPlayer = document.createElement('div');
+        const otherPlayer_score = document.createElement('span');
+        otherPlayer.classList.add('bird', 'other');
+        otherPlayer.appendChild(otherPlayer_score);
+        sky.appendChild(otherPlayer);
+
+        // get other player position from server
+        socket.on('players', ({ birdBottom, score }) => {
+            otherPlayer.style.bottom = birdBottom + 'px';
+            otherPlayer_score.innerHTML = score;
+        });
     });
 
     const jump = e => {
@@ -127,6 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('keyup', jump);
         scoreTag[1].innerHTML = score;
         menu.classList.remove('hide');
+
+        const otherPlayer = document.querySelector('div.bird.other');
+        if (otherPlayer) {
+            sky.removeChild(otherPlayer);
+        }
 
         if (score > best) {
             window.localStorage.setItem('best_score', score);
