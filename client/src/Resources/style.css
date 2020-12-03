@@ -69,6 +69,17 @@ body {
     bottom: 240px;
 }
 
+.other {
+    background: url('../../Images/flappy-bird2.png');
+    opacity: 0.5;
+}
+
+.other span {
+    position: absolute;
+    top: -50%;
+    left: 40%;
+}
+
 .obstacle {
     background: url('../../Images/flappybird-pipe.png');
     width: 60px;
@@ -131,9 +142,16 @@ body {
     text-align: center;
     height: 50%;
 }
-.start_btn {
-    width: 60%;
+.mode {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
     height: 40%;
+}
+.btn {
+    width: 60%;
+    height: 80%;
     background-color: azure;
     border: 4px solid #000;
     border-radius: 20px;
@@ -142,7 +160,7 @@ body {
     align-items: center;
     cursor: pointer;
 }
-.start_btn::before {
+.start::before {
     content: '';
     transform: translateX(10px);
     width: 35%;
@@ -150,6 +168,12 @@ body {
     background-color: #2fa744;
     clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
     border-radius: 10px;
+}
+.online::before {
+    content: '';
+    width: 45%;
+    height: 45%;
+    background: cadetblue;
 }
 .hide {
     transform: translateX(-100%);
