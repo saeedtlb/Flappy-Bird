@@ -1,4 +1,4 @@
-import { getElementPosition } from './misc.js';
+import { getElementPosition, random, position } from './misc.js';
 
 // wait till DOM element rendered on page
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const game = document.querySelector('.game_container');
     const sky = document.querySelector('.sky');
     const ground = document.querySelector('.ground_moving');
+    const obstaclesContainer = document.querySelector('.obstacles_container');
     const scoreTag = document.querySelectorAll('.score span');
     const bestscore = document.querySelector('.best_score span');
     const startbtn = document.querySelector('.menu .start');
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // remove obstacles
         const obstacles = document.querySelectorAll('.obstacle');
-        obstacles.forEach(obstacle => game.removeChild(obstacle));
+        obstacles.forEach(obstacle => obstaclesContainer.removeChild(obstacle));
 
         document.addEventListener('keyup', jump);
 
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const generateObstacle = () => {
         let obstacleLeft = 500; // First position of the obstacles
-        let obstacleBottom = Math.random() * 60; // Random num for height of obstacles
+        let obstacleBottom = random(30, 100); // Random num for height of obstacles
 
         if (isGameOver) return;
 
@@ -115,11 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
         obstacle.style.left = obstacleLeft + 'px';
         obstacleTop.style.left = obstacleLeft + 'px';
 
-        obstacle.style.bottom = obstacleBottom + 'px';
-        obstacleTop.style.top = -obstacleBottom + 'px';
+        const { y1, y2 } = position(obstacleBottom);
+        obstacle.style.bottom = y1 + 'px';
+        obstacleTop.style.top = y2 + 'px';
 
-        game.appendChild(obstacle);
-        game.appendChild(obstacleTop);
+        obstaclesContainer.appendChild(obstacle);
+        obstaclesContainer.appendChild(obstacleTop);
 
         // A function which will be call every 40ms(speed number) to decrease obstacleLeft = move obstacle to left
         const moveObstacles = () => {
@@ -134,20 +136,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (obstacleLeft === -60) {
                 clearInterval(timer);
-                game.removeChild(obstacle);
-                game.removeChild(obstacleTop);
+                obstaclesContainer.removeChild(obstacle);
+                obstaclesContainer.removeChild(obstacleTop);
             }
             if (obstacleLeft === 170) {
                 score++;
                 scoreTag[0].innerHTML = score;
             }
             if (
-                birdBottom === 0 ||
+                birdBottom <= 0 ||
                 (obstacleLeft > 170 &&
-                    obstacleLeft < 281 &&
-                    (birdBottom < obstacleBottom + 116 ||
-                        birdBottom > obstacleBottom + 203))
+                    obstacleLeft < 280 &&
+                    (birdBottom < 300 + y1 - 5 || birdBottom > 200 - y2)) //(sky height)547-300+top-40
+                // (birdBottom < obstacleBottom + 116 ||
+                //     birdBottom > obstacleBottom + 203))
             ) {
+                console.log(birdBottom, y1, y2);
                 gameOver();
                 clearInterval(timer);
             }
