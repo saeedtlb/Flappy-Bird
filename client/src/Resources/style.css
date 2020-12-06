@@ -177,11 +177,11 @@ body {
 }
 .online::before {
     content: '';
-    background: cadetblue;
     background: url('../../Images/champion2.png') no-repeat;
     background-size: cover;
     width: 60%;
     height: 100%;
+    transform: translateX(-10px);
 }
 .hide {
     transform: translateX(-100%);
@@ -208,5 +208,24 @@ body {
     }
     .mode {
         height: 35%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .menu {
+        width: 90%;
+    }
+    .online::before {
+        width: 90%;
+        transform: translateX(0);
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .rank > div {
+        line-height: 1.6em;
+    }
+    .online::before {
+        width: 65%;
     }
 }
