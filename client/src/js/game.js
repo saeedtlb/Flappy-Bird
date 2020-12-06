@@ -23,9 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // logical varriables
     const speed = 40;
     const gravity = 3;
+    const gap = getElementPosition(game, 'height') > 760 ? 50 : 100;
+    const skyHeight = getElementPosition(sky, 'height');
     let isGameOver = true;
     let score = 0;
-    let { bottom: birdBottom } = getElementPosition(bird);
+    let birdBottom = getElementPosition(bird, 'bottom');
 
     // Gravity of the game
     const startGame = () => {
@@ -96,14 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const jump = e => {
-        // If the key is space and the height of bird is less than 485 then increase height
-        if (e.code === 'Space' && birdBottom < 485) birdBottom += 50;
+        // If the key is space and the height of bird wont be higher than container size then increase height
+        if (e.code === 'Space' && birdBottom < skyHeight - 63) birdBottom += 50;
         bird.style.bottom = birdBottom + 'px';
     };
 
     const generateObstacle = () => {
-        let obstacleLeft = 500; // First position of the obstacles
-        let obstacleBottom = random(30, 100); // Random num for height of obstacles
+        let obstacleLeft = getElementPosition(game, 'width'); // First position of the obstacles
+        let obstacleBottom = random(gap / 3 - 5, gap); // Random num for height of obstacles
 
         if (isGameOver) return;
 
@@ -116,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         obstacle.style.left = obstacleLeft + 'px';
         obstacleTop.style.left = obstacleLeft + 'px';
 
-        const { y1, y2 } = position(obstacleBottom);
+        const { y1, y2 } = position(obstacleBottom, gap);
         obstacle.style.bottom = y1 + 'px';
         obstacleTop.style.top = y2 + 'px';
 
@@ -147,11 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 birdBottom <= 0 ||
                 (obstacleLeft > 170 &&
                     obstacleLeft < 280 &&
-                    (birdBottom < 300 + y1 - 5 || birdBottom > 200 - y2)) //(sky height)547-300+top-40
-                // (birdBottom < obstacleBottom + 116 ||
-                //     birdBottom > obstacleBottom + 203))
+                    (birdBottom < 300 + y1 - 5 ||
+                        birdBottom > skyHeight - 350 - y2))
             ) {
-                console.log(birdBottom, y1, y2);
+                console.log(birdBottom, skyHeight, y1, y2);
                 gameOver();
                 clearInterval(timer);
             }
