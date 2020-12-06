@@ -171,9 +171,11 @@ body {
 }
 .online::before {
     content: '';
-    width: 45%;
-    height: 45%;
     background: cadetblue;
+    background: url('../../Images/champion2.png') no-repeat;
+    background-size: cover;
+    width: 60%;
+    height: 100%;
 }
 .hide {
     transform: translateX(-100%);
