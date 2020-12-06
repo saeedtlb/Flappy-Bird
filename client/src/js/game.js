@@ -1,4 +1,4 @@
-import { getElementPosition, random, position } from './misc.js';
+import { getElementPosition, random, position, calculateGap } from './misc.js';
 
 // wait till DOM element rendered on page
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,11 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // logical varriables
     const speed = 40;
     const gravity = 3;
-    const gap = getElementPosition(game, 'height') > 760 ? 50 : 100;
+    // const gap = getElementPosition(game, 'height') > 760 ? 50 : 100;
+    const gap = calculateGap(game);
     const skyHeight = getElementPosition(sky, 'height');
     let isGameOver = true;
     let score = 0;
     let birdBottom = getElementPosition(bird, 'bottom');
+
+    console.log(gap);
 
     // Gravity of the game
     const startGame = () => {
@@ -51,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         obstacles.forEach(obstacle => obstaclesContainer.removeChild(obstacle));
 
         document.addEventListener('keyup', jump);
+        document.addEventListener('touchstart', jump);
 
         // start Game timers
         gameTimer = setInterval(startGame, speed);
@@ -99,7 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const jump = e => {
         // If the key is space and the height of bird wont be higher than container size then increase height
-        if (e.code === 'Space' && birdBottom < skyHeight - 63) birdBottom += 50;
+        if (
+            (e.type === 'touchstart' || e.code === 'Space') &&
+            birdBottom < skyHeight - 63
+        )
+            birdBottom += 50;
         bird.style.bottom = birdBottom + 'px';
     };
 
@@ -137,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             obstacleTop.style.left = obstacleLeft + 'px';
 
             if (obstacleLeft === -60) {
+                console.log('delete');
                 clearInterval(timer);
                 obstaclesContainer.removeChild(obstacle);
                 obstaclesContainer.removeChild(obstacleTop);
@@ -146,13 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 scoreTag[0].innerHTML = score;
             }
             if (
-                birdBottom <= 0 ||
-                (obstacleLeft > 170 &&
-                    obstacleLeft < 280 &&
-                    (birdBottom < 300 + y1 - 5 ||
-                        birdBottom > skyHeight - 350 - y2))
+                birdBottom <= 0
+                // ||
+                // (obstacleLeft > 170 &&
+                //     obstacleLeft < 280 &&
+                //     (birdBottom < 300 + y1 - 5 ||
+                //         birdBottom > skyHeight - 350 - y2))
             ) {
-                console.log(birdBottom, skyHeight, y1, y2);
                 gameOver();
                 clearInterval(timer);
             }
@@ -167,7 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         isGameOver = true;
         ground.classList.remove('ground_moving');
+
         document.removeEventListener('keyup', jump);
+        document.removeEventListener('touchstart', jump);
+
         scoreTag[1].innerHTML = score;
         menu.classList.remove('hide');
 
