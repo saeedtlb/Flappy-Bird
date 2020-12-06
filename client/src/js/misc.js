@@ -16,3 +16,22 @@ export const position = (bottom, gap) => {
 
     return { y1: -y1, y2: -y2 };
 };
+
+export const calculateGap = el => {
+    let gap = null;
+
+    const height = getElementPosition(el, 'height');
+    const width = getElementPosition(el, 'width');
+
+    if (height < 760) {
+        if (width <= 450) {
+            gap = 160;
+        } else {
+            gap = 100;
+        }
+    } else {
+        gap = 50;
+    }
+
+    return gap;
+};
