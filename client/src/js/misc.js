@@ -1,16 +1,9 @@
-export const getElementPosition = el => {
-    let { left, bottom } = getComputedStyle(el);
-
-    left = parseInt(left.replace(/\D/gi, ''));
-    bottom = parseInt(bottom.replace(/\D/gi, ''));
-
-    return { left, bottom };
-};
+export const getElementPosition = (el, property) =>
+    parseInt(getComputedStyle(el)[property]);
 
 export const random = (min, max) => Math.random() * (max - min) + min;
 
-export const position = bottom => {
-    const gap = 100;
+export const position = (bottom, gap) => {
     let y1, y2;
     if (bottom < 75) {
         const chance = Math.random() <= 0.5;
