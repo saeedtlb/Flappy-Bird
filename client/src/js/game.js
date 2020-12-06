@@ -155,12 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 scoreTag[0].innerHTML = score;
             }
             if (
-                birdBottom <= 0
-                // ||
-                // (obstacleLeft > 170 &&
-                //     obstacleLeft < 280 &&
-                //     (birdBottom < 300 + y1 - 5 ||
-                //         birdBottom > skyHeight - 350 - y2))
+                birdBottom <= 0 ||
+                (obstacleLeft > 170 &&
+                    obstacleLeft < 280 &&
+                    (birdBottom < 300 + y1 - 5 ||
+                        birdBottom > skyHeight - 350 - y2))
             ) {
                 gameOver();
                 clearInterval(timer);
