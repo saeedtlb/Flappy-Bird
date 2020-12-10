@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bird = document.querySelector('.bird');
     const game = document.querySelector('.game_container');
     const sky = document.querySelector('.sky');
-    const ground = document.querySelector('.ground_moving');
+    const ground = document.querySelector('.ground > div');
     const obstaclesContainer = document.querySelector('.obstacles_container');
     const scoreTag = document.querySelectorAll('.score span');
     const bestscore = document.querySelector('.best_score span');
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // logical varriables
     const speed = 40;
     const gravity = 3;
-    // const gap = getElementPosition(game, 'height') > 760 ? 50 : 100;
     const gap = calculateGap(game);
     const skyHeight = getElementPosition(sky, 'height');
     let isGameOver = true;
@@ -62,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         time = setInterval(generateObstacle, 4000);
 
         menu.classList.add('hide');
+        ground.classList.add('ground_moving');
     };
 
     // signle player mode
