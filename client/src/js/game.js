@@ -1,4 +1,4 @@
-import { getElementPosition, random, position, calculateGap } from './misc.js';
+import { getElementPosition, random, calculateGap } from './misc.js';
 
 // wait till DOM element rendered on page
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,13 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // logical varriables
     const speed = 40;
     const gravity = 3;
+    // const gap = 450;
     const gap = calculateGap(game);
+    console.log(gap);
+    const birdHeight = getElementPosition(bird, 'height');
     const skyHeight = getElementPosition(sky, 'height');
     let isGameOver = true;
     let score = 0;
     let birdBottom = getElementPosition(bird, 'bottom');
-
-    console.log(gap);
 
     // Gravity of the game
     const startGame = () => {
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const generateObstacle = () => {
         let obstacleLeft = getElementPosition(game, 'width'); // First position of the obstacles
-        let obstacleBottom = random(gap / 3 - 5, gap); // Random num for height of obstacles
+        let obstacleBottom = random(0, 150);
 
         if (isGameOver) return;
 
@@ -126,14 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
         obstacle.style.left = obstacleLeft + 'px';
         obstacleTop.style.left = obstacleLeft + 'px';
 
-        const { y1, y2 } = position(obstacleBottom, gap);
-        obstacle.style.bottom = y1 + 'px';
-        obstacleTop.style.top = y2 + 'px';
+        obstacle.style.bottom = -obstacleBottom + 'px';
+        obstacleTop.style.bottom = gap - obstacleBottom + 'px';
 
         obstaclesContainer.appendChild(obstacle);
         obstaclesContainer.appendChild(obstacleTop);
 
-        // A function which will be call every 40ms(speed number) to decrease obstacleLeft = move obstacle to left
+        /*  A function which will be call every 40ms(speed number) 
+            to decrease obstacleLeft = move obstacle to left */
         const moveObstacles = () => {
             if (isGameOver) {
                 clearInterval(timer);
@@ -145,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
             obstacleTop.style.left = obstacleLeft + 'px';
 
             if (obstacleLeft === -60) {
-                console.log('delete');
                 clearInterval(timer);
                 obstaclesContainer.removeChild(obstacle);
                 obstaclesContainer.removeChild(obstacleTop);
@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 birdBottom <= 0 ||
                 (obstacleLeft > 170 &&
                     obstacleLeft < 280 &&
-                    (birdBottom < 300 + y1 - 5 ||
-                        birdBottom > skyHeight - 350 - y2))
+                    (birdBottom < 300 - obstacleBottom ||
+                        birdBottom > gap - obstacleBottom - birdHeight))
             ) {
                 gameOver();
                 clearInterval(timer);
