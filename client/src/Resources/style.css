@@ -99,7 +99,7 @@ body {
 
 @keyframes slider {
     from {
-        background-position: 10000%;
+        background-position: 1000%;
     }
     to {
         background-position: 0%;
@@ -229,7 +229,7 @@ body {
         width: 65%;
     }
 
-    .ground_moving {
+    /* .ground_moving {
         animation: slider 40s infinite linear;
     }
 
@@ -240,5 +240,5 @@ body {
         to {
             background-position: 0%;
         }
-    }
+    } */
 }
