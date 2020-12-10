@@ -57,7 +57,7 @@ body {
     height: 100%;
     background: url('../../Images/bottom-background.png') repeat-x;
     background-size: cover;
-    animation: slider 400s infinite linear;
+    animation: slider 40s infinite linear;
 }
 
 .obstacles_container {
@@ -227,5 +227,18 @@ body {
     }
     .online::before {
         width: 65%;
+    }
+
+    .ground_moving {
+        animation: slider 40s infinite linear;
+    }
+
+    @keyframes slider {
+        from {
+            background-position: 1000%;
+        }
+        to {
+            background-position: 0%;
+        }
     }
 }
