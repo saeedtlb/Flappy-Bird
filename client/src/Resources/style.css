@@ -1,244 +1,227 @@
 @font-face {
-    src: url('./FlappyBird.ttf');
-    font-family: 'flappy-bird';
+  src: url('./FlappyBird.ttf');
+  font-family: 'flappy-bird';
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'flappy-bird';
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'flappy-bird';
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #ffefba;
+  background: -webkit-linear-gradient(to right, #ffffff, #ffefba);
+  background: linear-gradient(to top, #ffffff, #ffefba);
 }
 
 .game_container {
-    margin: 20px;
-    width: 500px;
-    height: 730px;
-    position: relative;
-    overflow: hidden;
+  margin: 20px;
+  width: 500px;
+  height: 730px;
+  position: relative;
+  overflow: hidden;
 }
 
 .sky {
-    background: url('../../Images/fb-game-background.png');
-    background-size: contain;
-    width: 100%;
-    height: 75%;
-    position: absolute;
+  background: url('../../Images/fb-game-background.png');
+  background-size: contain;
+  width: 100%;
+  height: 75%;
+  position: absolute;
 }
 
 .sky .score {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
-    font-size: 1.9em;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  font-size: 1.9em;
 }
 
 .ground {
-    background: url('../../Images/bottom-background.png') no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 25%;
-    position: absolute;
-    bottom: 0;
-    z-index: 1;
+  background: url('../../Images/bottom-background.png') no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 26%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
 }
 
 .ground_moving {
-    width: 100%;
-    height: 100%;
-    background: url('../../Images/bottom-background.png') repeat-x;
-    background-size: cover;
-    animation: slider 40s infinite linear;
+  width: 100%;
+  height: 100%;
+  background: url('../../Images/bottom-background.png') repeat-x;
+  background-size: cover;
+  animation: slider 40s infinite linear;
 }
 
 .obstacles_container {
-    width: 100%;
-    height: 75%;
-    position: absolute;
+  width: 100%;
+  height: 75%;
+  position: absolute;
 }
 
 .bird {
-    background: url('../../Images/flappy-bird.png');
-    width: 60px;
-    height: 45px;
-    position: absolute;
-    left: 220px;
-    bottom: 240px;
+  background: url('../../Images/flappy-bird.png');
+  width: 60px;
+  height: 45px;
+  position: absolute;
+  left: 220px;
+  bottom: 240px;
 }
 
 .other {
-    background: url('../../Images/flappy-bird2.png');
-    opacity: 0.5;
+  background: url('../../Images/flappy-bird2.png');
+  opacity: 0.5;
 }
 
 .other span {
-    position: absolute;
-    top: -50%;
-    left: 40%;
+  position: absolute;
+  top: -50%;
+  left: 40%;
 }
 
 .obstacle {
-    background: url('../../Images/flappybird-pipe.png');
-    width: 60px;
-    height: 300px;
-    position: absolute;
+  background: url('../../Images/flappybird-pipe.png');
+  width: 60px;
+  height: 300px;
+  position: absolute;
 }
 
 .obstacle_top {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 @keyframes slider {
-    from {
-        background-position: 1000%;
-    }
-    to {
-        background-position: 0%;
-    }
+  from {
+    background-position: 1000%;
+  }
+  to {
+    background-position: 0%;
+  }
 }
 
 /******************************** MENU ******************************************/
 .menu_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-    transition: all 0.5s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  transition: all 0.5s ease-out;
 }
 .menu {
-    width: 90%;
-    height: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+  width: 90%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 .rank {
-    width: 100%;
-    height: 60%;
-    padding: 15px;
-    background-color: #ddd894;
-    color: #d4905f;
-    border: 3px solid #000;
-    border-radius: 18px;
-    font-size: 2em;
+  width: 100%;
+  height: 60%;
+  padding: 15px;
+  background-color: #ddd894;
+  color: #d4905f;
+  border: 3px solid #000;
+  border-radius: 18px;
+  font-size: 2em;
 }
 .rank span {
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: #000;
-    color: #fff;
-    font-size: 1.8em;
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: #000;
+  color: #fff;
+  font-size: 1.8em;
 }
 .rank > div {
-    text-align: center;
-    height: 50%;
+  text-align: center;
+  height: 50%;
 }
 .mode {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    height: 40%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  height: 40%;
 }
 .btn {
-    width: 60%;
-    height: 80%;
-    background-color: azure;
-    border: 4px solid #000;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  width: 220px;
+  height: 80%;
+  background-color: azure;
+  border: 4px solid #000;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .start::before {
-    content: '';
-    transform: translateX(10px);
-    width: 35%;
-    height: 70%;
-    background-color: #2fa744;
-    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-    border-radius: 10px;
+  content: '';
+  transform: translateX(10px);
+  width: 35%;
+  height: 70%;
+  background-color: #2fa744;
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  border-radius: 10px;
 }
 .online::before {
-    content: '';
-    background: url('../../Images/champion2.png') no-repeat;
-    background-size: cover;
-    width: 60%;
-    height: 100%;
-    transform: translateX(-10px);
+  content: '';
+  background: url('../../Images/cup.png') no-repeat;
+  background-size: contain;
+  width: 120px;
+  height: 75%;
 }
 .hide {
-    transform: translateX(-100%);
-    opacity: 0;
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 /* #########################################   RESPONSIVE   #################################################### */
 @media screen and (max-width: 768px) {
-    .game_container {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-    }
-    .menu {
-        width: 70%;
-        height: 75%;
-    }
-    .rank {
-        height: 70%;
-        font-size: 3em;
-    }
-    .rank > div {
-        line-height: 1.9em;
-    }
-    .mode {
-        height: 35%;
-    }
+  .game_container {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
+  .menu {
+    width: 70%;
+    height: 75%;
+  }
+  .rank {
+    height: 70%;
+    font-size: 3em;
+  }
+  .rank > div {
+    line-height: 1.9em;
+  }
+  .mode {
+    height: 35%;
+  }
 }
 
 @media screen and (max-width: 576px) {
-    .menu {
-        width: 90%;
-    }
-    .online::before {
-        width: 90%;
-        transform: translateX(0);
-    }
+  .menu {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 425px) {
-    .rank > div {
-        line-height: 1.6em;
-    }
-    .online::before {
-        width: 65%;
-    }
-
-    /* .ground_moving {
-        animation: slider 40s infinite linear;
-    }
-
-    @keyframes slider {
-        from {
-            background-position: 1000%;
-        }
-        to {
-            background-position: 0%;
-        }
-    } */
+  .rank > div {
+    line-height: 1.6em;
+  }
 }
